@@ -2,10 +2,8 @@ package ru.geekbrains.spring2.market.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.spring2.market.entities.Product;
+import ru.geekbrains.spring2.market.dtos.ShoppingCart;
 import ru.geekbrains.spring2.market.services.ShoppingCartService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -14,18 +12,17 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @GetMapping
-    public List<Product> findAllInCart() {
-        return shoppingCartService.findAllProductsInCart();
+    public ShoppingCart getCurrentCart() {
+        return shoppingCartService.getCurrentCart();
     }
 
-    @GetMapping("/{productId}")
-    public List<Product> addToCart(@PathVariable Long productId) {
-        shoppingCartService.addProductToCart(productId);
-        return shoppingCartService.findAllProductsInCart();
+    @GetMapping("/add/{id}")
+    public void addToCart(@PathVariable Long id) {
+        shoppingCartService.add(id);
     }
 
-    @DeleteMapping("/{productId}")
-    public void deleteProductFromCart(@PathVariable Long productId) {
-        shoppingCartService.deleteProductFromCart(productId);
+    @GetMapping("/delete/{id}")
+    public void removeFromCart(@PathVariable Long id) {
+        shoppingCartService.remove(id);
     }
 }

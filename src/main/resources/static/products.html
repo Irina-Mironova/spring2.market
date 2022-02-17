@@ -16,6 +16,7 @@
 <div class="container" ng-controller="productsController">
     <h1>Product market</h1>
     <h3>Список товаров</h3>
+
     <table class="table table-striped">
         <tr class="table-primary">
             <td>Id</td>
@@ -40,23 +41,26 @@
     <h3>Корзина</h3>
     <table class="table table-striped">
         <tr class="table-primary">
-            <td>Id</td>
             <td>Название</td>
-            <td>Цена</td>
             <td>Количество</td>
+            <td>Цена</td>
             <td></td>
         </tr>
         <tbody>
-        <tr ng-repeat="p in cartProductList">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>1</td>
+        <tr ng-repeat="item in cart.items">
+            <td>{{item.productTitle}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
             <td>
-                <button type="button" class="btn btn-primary" ng-click="deleteProductFromCart(p.id)">Удалить из
+                <button type="button" class="btn btn-primary" ng-click="removeProductFromCart(item.productId)">Удалить из
                     корзины
                 </button>
             </td>
+        </tr>
+        <tr>
+            <td>Итого</td>
+            <td></td>
+            <td>{{cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>

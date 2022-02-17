@@ -1,25 +1,26 @@
 angular.module('app', []).controller('productsController', function ($scope, $http) {
-    $scope.loadProducts = function () {
-        $http.get('http://localhost:8189/market/api/v1/products').then(function (response) {
-            $scope.productsList = response.data;
-        });
-    }
 
-    $scope.loadProductsInCart = function (){
+    $scope.loadProducts = function () {
+            $http.get('http://localhost:8189/market/api/v1/products').then(function (response) {
+                $scope.productsList = response.data;
+            });
+        }
+
+    $scope.loadCart = function (){
         $http.get('http://localhost:8189/market/api/v1/cart').then(function (response){
-           $scope.cartProductList = response.data;
+           $scope.cart = response.data;
         });
     }
 
     $scope.addProductToCart = function (productId){
-       $http.get('http://localhost:8189/market/api/v1/cart/'+ productId).then(function(response){
-         $scope.cartProductList = response.data;
+       $http.get('http://localhost:8189/market/api/v1/cart/add/'+ productId).then(function(response){
+         $scope.loadCart();
        });
     }
 
-    $scope.deleteProductFromCart = function (productId){
-       $http.delete('http://localhost:8189/market/api/v1/cart/'+ productId).then(function (response) {
-         $scope.loadProductsInCart();
+    $scope.removeProductFromCart = function (productId){
+       $http.get('http://localhost:8189/market/api/v1/cart/delete/'+ productId).then(function (response) {
+         $scope.loadCart();
        });
     }
 
@@ -35,7 +36,7 @@ angular.module('app', []).controller('productsController', function ($scope, $ht
         });
     }
 
-    $scope.loadProducts();
-    $scope.loadProductsInCart();
+   $scope.loadProducts();
+   $scope.loadCart();
 
 });

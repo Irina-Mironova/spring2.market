@@ -3,28 +3,34 @@ package ru.geekbrains.spring2.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring2.market.entities.Product;
-import ru.geekbrains.spring2.market.repositories.ProductRepository;
-import ru.geekbrains.spring2.market.utils.ShoppingCart;
+import ru.geekbrains.spring2.market.exceptions.ResourceNotFoundException;
+import ru.geekbrains.spring2.market.dtos.ShoppingCart;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
 public class ShoppingCartService {
-    private final ShoppingCart shoppingCart;
-    private final ProductRepository productRepository;
+    private final ProductService productService;
+    private ShoppingCart tempCart;
 
-    public void addProductToCart(Long productId){
-        Product product = productRepository.findById(productId).get();
-        shoppingCart.addProductToCart(product);
+    @PostConstruct
+    public void init() {
+        tempCart = new ShoppingCart();
     }
 
-    public void deleteProductFromCart(Long productId){
-        Product product = productRepository.findById(productId).get();
-        shoppingCart.deleteProductFromCart(product);
+    public ShoppingCart getCurrentCart() {
+        return tempCart;
     }
 
-    public List<Product> findAllProductsInCart() {
-       return shoppingCart.getProductList();
+    public void add(Long productId) {
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Не удается добавить продукт с id: " + productId + " в корзину. Продукт не найден"));
+        tempCart.add(product);
     }
+
+    public void remove(Long productId) {
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Не удается найти продукт с id: " + productId));
+        tempCart.remove(product);
+    }
+
 }
