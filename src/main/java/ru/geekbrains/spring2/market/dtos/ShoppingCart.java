@@ -22,7 +22,13 @@ public class ShoppingCart {
     }
 
     public void add(Product product) {
-        items.add(new ShoppingCartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
+        ShoppingCartItem item = findProductInCart(product);
+        if (item == null) {
+            items.add(new ShoppingCartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
+        } else {
+            item.setQuantity(item.getQuantity() +  1);
+            item.setPrice(item.getQuantity() * item.getPricePerProduct());
+        }
         recalculate();
     }
 
@@ -33,16 +39,32 @@ public class ShoppingCart {
         }
     }
 
-    private ShoppingCartItem findOrderFromProduct(Product product) {
+    private ShoppingCartItem findProductInCart(Product product) {
         return items.stream().filter(o -> o.getProductId().equals(product.getId())).findFirst().orElse(null);
     }
 
-    public void remove(Product product) {
-        ShoppingCartItem item = findOrderFromProduct(product);
+    public void removeAll() {
+        items.clear();
+        recalculate();
+    }
+
+    public void removeProduct(Product product, int quantity){
+        ShoppingCartItem item = findProductInCart(product);
         if (item == null) {
             return;
         }
-        items.remove(item);
+        if (quantity == 0) {
+            items.remove(item);
+            recalculate();
+            return;
+        }
+
+        if (item.getQuantity() > 1) {
+            item.setQuantity(item.getQuantity() - 1);
+            item.setPrice(item.getQuantity() * item.getPricePerProduct());
+        } else{
+            items.remove(item);
+        }
         recalculate();
     }
 }

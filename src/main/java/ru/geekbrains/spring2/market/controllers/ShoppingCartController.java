@@ -21,8 +21,13 @@ public class ShoppingCartController {
         shoppingCartService.add(id);
     }
 
-    @GetMapping("/delete/{id}")
-    public void removeFromCart(@PathVariable Long id) {
-        shoppingCartService.remove(id);
+    @GetMapping("/deleteProduct")
+    public void removeProduct(@RequestParam Long productId, @RequestParam(defaultValue = "0") int quantity) {
+        shoppingCartService.removeProduct(productId, quantity);
+    }
+
+    @GetMapping("/delete")
+    public void clearCurrentCart(){
+        shoppingCartService.removeAll();
     }
 }

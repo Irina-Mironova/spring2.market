@@ -18,8 +18,8 @@ angular.module('app', []).controller('productsController', function ($scope, $ht
        });
     }
 
-    $scope.removeProductFromCart = function (productId){
-       $http.get('http://localhost:8189/market/api/v1/cart/delete/'+ productId).then(function (response) {
+    $scope.removeProductFromCart = function (productId, quantity){
+       $http.get('http://localhost:8189/market/api/v1/cart/deleteProduct?productId='+ productId+"&quantity="+quantity).then(function (response) {
          $scope.loadCart();
        });
     }
@@ -35,6 +35,12 @@ angular.module('app', []).controller('productsController', function ($scope, $ht
             $scope.loadProducts();
         });
     }
+
+   $scope.deleteCart = function(){
+       $http.get('http://localhost:8189/market/api/v1/cart/delete').then(function (response) {
+          $scope.loadCart();
+       });
+   }
 
    $scope.loadProducts();
    $scope.loadCart();

@@ -39,6 +39,7 @@
     </table>
 
     <h3>Корзина</h3>
+    <button type="button" class="btn btn-primary" ng-click="deleteCart()">Очистить корзину</button>
     <table class="table table-striped">
         <tr class="table-primary">
             <td>Название</td>
@@ -49,10 +50,14 @@
         <tbody>
         <tr ng-repeat="item in cart.items">
             <td>{{item.productTitle}}</td>
-            <td>{{item.quantity}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="removeProductFromCart(item.productId,-1)">-</button>
+                {{item.quantity}}
+                <button type="button" class="btn btn-primary" ng-click="addProductToCart(item.productId)">+</button>
+            </td>
             <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
             <td>
-                <button type="button" class="btn btn-primary" ng-click="removeProductFromCart(item.productId)">Удалить из
+                <button type="button" class="btn btn-primary" ng-click="removeProductFromCart(item.productId,0)">Удалить из
                     корзины
                 </button>
             </td>
