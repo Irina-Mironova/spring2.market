@@ -29,8 +29,7 @@ public class ShoppingCartService {
     }
 
     public void removeProduct(Long productId, int quantity) {
-        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Не удается найти продукт с id: " + productId));
-        tempCart.removeProduct(product, quantity);
+        tempCart.removeProduct(productId, quantity);
     }
 
     public void removeAll() {

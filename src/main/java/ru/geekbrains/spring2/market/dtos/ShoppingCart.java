@@ -22,13 +22,14 @@ public class ShoppingCart {
     }
 
     public void add(Product product) {
-        ShoppingCartItem item = findProductInCart(product);
-        if (item == null) {
-            items.add(new ShoppingCartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
-        } else {
-            item.setQuantity(item.getQuantity() +  1);
-            item.setPrice(item.getQuantity() * item.getPricePerProduct());
+        for (ShoppingCartItem item : items) {
+            if (product.getId().equals(item.getProductId())) {
+                item.changeQuantity(1);
+                recalculate();
+                return;
+            }
         }
+        items.add(new ShoppingCartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
         recalculate();
     }
 
@@ -39,32 +40,19 @@ public class ShoppingCart {
         }
     }
 
-    private ShoppingCartItem findProductInCart(Product product) {
-        return items.stream().filter(o -> o.getProductId().equals(product.getId())).findFirst().orElse(null);
-    }
-
     public void removeAll() {
         items.clear();
         recalculate();
     }
 
-    public void removeProduct(Product product, int quantity){
-        ShoppingCartItem item = findProductInCart(product);
-        if (item == null) {
-            return;
+    public void removeProduct(Long productId, int quantity) {
+        for (ShoppingCartItem item : items) {
+            if (productId.equals(item.getProductId())) {
+                item.changeQuantity(quantity);
+                break;
+            }
         }
-        if (quantity == 0) {
-            items.remove(item);
-            recalculate();
-            return;
-        }
-
-        if (item.getQuantity() > 1) {
-            item.setQuantity(item.getQuantity() - 1);
-            item.setPrice(item.getQuantity() * item.getPricePerProduct());
-        } else{
-            items.remove(item);
-        }
+        items.removeIf(item -> item.getQuantity() == 0);
         recalculate();
     }
 }

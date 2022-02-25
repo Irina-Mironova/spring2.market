@@ -13,4 +13,9 @@ public class ShoppingCartItem {
     private int quantity;
     private float pricePerProduct;
     private float price;
+
+    public void changeQuantity(int delta) {
+        quantity += delta;
+        price = pricePerProduct * quantity;
+    }
 }

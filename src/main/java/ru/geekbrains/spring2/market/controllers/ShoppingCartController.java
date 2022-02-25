@@ -21,13 +21,13 @@ public class ShoppingCartController {
         shoppingCartService.add(id);
     }
 
-    @GetMapping("/deleteProduct")
+    @GetMapping("/remove")
     public void removeProduct(@RequestParam Long productId, @RequestParam(defaultValue = "0") int quantity) {
         shoppingCartService.removeProduct(productId, quantity);
     }
 
-    @GetMapping("/delete")
-    public void clearCurrentCart(){
+    @GetMapping("/clear")
+    public void clearCurrentCart() {
         shoppingCartService.removeAll();
     }
 }
