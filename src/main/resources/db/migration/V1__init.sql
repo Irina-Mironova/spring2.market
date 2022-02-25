@@ -26,7 +26,9 @@ create table users
    password varchar(80) not null,
    first_name varchar(30),
    last_name varchar(30),
-   email varchar(255)
+   email varchar(255),
+   created_at timestamp default current_timestamp,
+   updated_at timestamp default current_timestamp
 );
 
 
@@ -56,5 +58,28 @@ values ('bob', '$2a$12$uY2t0/L2eQ4cCiyCuQ36FOT7S3e/jzTte.aIVXYkD6HqPG6wTl826', '
 insert into users_roles (user_id, role_id)
 values  (1, 2),
         (2, 1);
+
+create table orders
+(
+    id          bigserial primary key,
+    user_id     bigint not null references users (id),
+    total_price float not null,
+    address     varchar(255),
+    phone       varchar(255),
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
+);
+
+create table order_items
+(
+    id                bigserial primary key,
+    product_id        bigint not null references products (id),
+    order_id          bigint not null references orders (id),
+    quantity          int    not null,
+    price_per_product float    not null,
+    price             float    not null,
+    created_at        timestamp default current_timestamp,
+    updated_at        timestamp default current_timestamp
+);
 
 

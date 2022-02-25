@@ -24,4 +24,9 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Collection<User> users;
+
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+    }
 }

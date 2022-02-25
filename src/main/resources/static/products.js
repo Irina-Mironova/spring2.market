@@ -97,6 +97,13 @@ angular.module('app', ['ngStorage']).controller('productsController', function (
        });
    }
 
+   $scope.createOrder = function(){
+          $http.post('http://localhost:8189/market/api/v1/orders', $scope.user).then(function (response) {
+             alert("Заказ оформлен");
+          });
+      }
+
+
    $scope.loadProducts();
    $scope.loadCart();
 
