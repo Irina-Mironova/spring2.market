@@ -2,5 +2,8 @@ server:
   port: 8190
   servlet:
     context-path: /market-carts
+core-service:
+  url: http://localhost:8189/market/api/v1/products
+
 
 
