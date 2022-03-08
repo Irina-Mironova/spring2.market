@@ -7,7 +7,9 @@
         <module>core-service</module>
         <module>cart-service</module>
         <module>api</module>
-        <module>front</module>
+        <module>front-service</module>
+        <module>gateway-service</module>
+        <module>auth-service</module>
     </modules>
 
     <groupId>ru.geekbrains.spring2</groupId>
