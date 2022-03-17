@@ -2,7 +2,7 @@ package ru.geekbrains.market.carts.converters;
 
 import org.springframework.stereotype.Component;
 import ru.deekbrains.market.api.ShoppingCartItemDto;
-import ru.geekbrains.market.carts.entities.ShoppingCartItem;
+import ru.geekbrains.market.carts.models.ShoppingCartItem;
 
 @Component
 public class ShoppingCartItemConverter {

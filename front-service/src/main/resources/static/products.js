@@ -59,7 +59,7 @@ angular.module('app', ['ngStorage']).controller('productsController', function (
             $http.get('http://localhost:5555/core/api/v1/products').then(function (response) {
                 $scope.productsList = response.data;
             });
-        }
+    }
 
     $scope.loadCart = function (){
         $http.get('http://localhost:5555/cart/api/v1/cart').then(function (response){
@@ -103,6 +103,12 @@ angular.module('app', ['ngStorage']).controller('productsController', function (
              alert("Заказ оформлен");
           });
       }
+
+   $scope.filter = function(){
+             $http.post('http://localhost:5555/core/api/v1/products', $scope.user).then(function (response) {
+                $scope.productsList = response.data;
+             });
+         }
 
 
    $scope.loadProducts();

@@ -3,7 +3,7 @@ package ru.geekbrains.market.carts.converters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.deekbrains.market.api.ShoppingCartDto;
-import ru.geekbrains.market.carts.entities.ShoppingCart;
+import ru.geekbrains.market.carts.models.ShoppingCart;
 
 import java.util.stream.Collectors;
 

@@ -1,10 +1,11 @@
 package ru.deekbrains.market.api;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ShoppingCartDto {
     private List<ShoppingCartItemDto> items;
-    private float totalPrice;
+    private BigDecimal totalPrice;
 
     public List<ShoppingCartItemDto> getItems() {
         return items;
@@ -14,11 +15,11 @@ public class ShoppingCartDto {
         this.items = items;
     }
 
-    public float getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }
