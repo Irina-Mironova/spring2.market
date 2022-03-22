@@ -1,4 +1,4 @@
-package ru.deekbrains.market.api;
+package ru.geekbrains.market.api;
 
 public class JwtRequest {
     private String username;

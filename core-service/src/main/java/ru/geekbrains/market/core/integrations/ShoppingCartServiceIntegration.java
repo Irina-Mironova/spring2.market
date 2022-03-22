@@ -1,17 +1,9 @@
 package ru.geekbrains.market.core.integrations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.deekbrains.market.api.ProductDto;
-import ru.deekbrains.market.api.ResourceNotFoundException;
-import ru.deekbrains.market.api.ShoppingCartDto;
-
-import java.util.Optional;
+import ru.geekbrains.market.api.ShoppingCartDto;
 
 @Component
 @RequiredArgsConstructor

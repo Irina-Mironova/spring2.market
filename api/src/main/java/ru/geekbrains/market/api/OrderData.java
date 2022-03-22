@@ -1,4 +1,4 @@
-package ru.deekbrains.market.api;
+package ru.geekbrains.market.api;
 
 public class OrderData {
     private String address;

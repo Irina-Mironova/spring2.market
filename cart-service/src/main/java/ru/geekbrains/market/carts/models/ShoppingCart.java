@@ -1,7 +1,7 @@
 package ru.geekbrains.market.carts.models;
 
 import lombok.Data;
-import ru.deekbrains.market.api.ProductDto;
+import ru.geekbrains.market.api.ProductDto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -56,5 +56,9 @@ public class ShoppingCart {
         }
         items.removeIf(item -> item.getQuantity() == 0);
         recalculate();
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 }

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.deekbrains.market.api.AppError;
-import ru.deekbrains.market.api.JwtRequest;
-import ru.deekbrains.market.api.JwtResponse;
-import ru.deekbrains.market.api.StringResponse;
+import ru.geekbrains.market.api.AppError;
+import ru.geekbrains.market.api.JwtRequest;
+import ru.geekbrains.market.api.JwtResponse;
+import ru.geekbrains.market.api.StringResponse;
 import ru.geekbrains.market.auth.services.UserService;
 import ru.geekbrains.market.auth.utils.JwtTokenUtil;
 

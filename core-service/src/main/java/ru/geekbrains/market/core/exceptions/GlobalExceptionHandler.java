@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.deekbrains.market.api.AppError;
-import ru.deekbrains.market.api.ResourceNotFoundException;
-import ru.deekbrains.market.api.UsernameNotFoundException;
+import ru.geekbrains.market.api.AppError;
+import ru.geekbrains.market.api.ResourceNotFoundException;
+import ru.geekbrains.market.api.UsernameNotFoundException;
 
 @ControllerAdvice
 @Slf4j

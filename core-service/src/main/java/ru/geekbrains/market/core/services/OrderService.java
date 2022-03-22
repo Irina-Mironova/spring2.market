@@ -2,8 +2,8 @@ package ru.geekbrains.market.core.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.deekbrains.market.api.ResourceNotFoundException;
-import ru.deekbrains.market.api.ShoppingCartDto;
+import ru.geekbrains.market.api.ResourceNotFoundException;
+import ru.geekbrains.market.api.ShoppingCartDto;
 import ru.geekbrains.market.core.entities.Order;
 import ru.geekbrains.market.core.entities.OrderItem;
 import ru.geekbrains.market.core.integrations.ShoppingCartServiceIntegration;
@@ -20,7 +20,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public void createOrder(String username, String address, String phone) {
+    public Order createOrder(String username, String address, String phone) {
         Order order = new Order();
 
         ShoppingCartDto shoppingCartDto = shoppingCartServiceIntegration.getCurrentCart();
@@ -38,5 +38,6 @@ public class OrderService {
                 .collect(Collectors.toList()));
         orderRepository.save(order);
         shoppingCartServiceIntegration.clear();
+        return order;
     }
 }

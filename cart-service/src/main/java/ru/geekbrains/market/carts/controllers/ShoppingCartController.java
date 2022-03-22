@@ -2,7 +2,7 @@ package ru.geekbrains.market.carts.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.deekbrains.market.api.ShoppingCartDto;
+import ru.geekbrains.market.api.ShoppingCartDto;
 import ru.geekbrains.market.carts.converters.ShoppingCartConverter;
 import ru.geekbrains.market.carts.services.ShoppingCartService;
 

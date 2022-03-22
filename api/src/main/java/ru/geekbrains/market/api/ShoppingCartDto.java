@@ -1,4 +1,4 @@
-package ru.deekbrains.market.api;
+package ru.geekbrains.market.api;
 
 import java.math.BigDecimal;
 import java.util.List;

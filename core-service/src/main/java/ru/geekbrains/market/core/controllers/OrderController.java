@@ -3,7 +3,7 @@ package ru.geekbrains.market.core.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.deekbrains.market.api.OrderData;
+import ru.geekbrains.market.api.OrderData;
 import ru.geekbrains.market.core.services.OrderService;
 
 @RestController
