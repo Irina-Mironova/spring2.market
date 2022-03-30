@@ -8,7 +8,6 @@ import ru.geekbrains.market.api.ProductFilter;
 import ru.geekbrains.market.api.ResourceNotFoundException;
 import ru.geekbrains.market.core.converters.ProductConverter;
 import ru.geekbrains.market.core.entities.Product;
-import ru.geekbrains.market.core.repositories.specifications.ProductSpecification;
 import ru.geekbrains.market.core.services.ProductService;
 
 import java.util.List;
@@ -28,19 +27,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public List<ProductDto> findAllWithFilters(@RequestBody ProductFilter productFilter) {
-        Specification<Product> specification = Specification.where(null);
-        if (productFilter.getWord() != null) {
-            specification = specification.and(ProductSpecification.titleContains(productFilter.getWord()));
-        }
-        if (productFilter.getMinPrice() != null) {
-            specification = specification.and(ProductSpecification.priceGreaterThanOrEq(productFilter.getMinPrice()));
-        }
-        if (productFilter.getMaxPrice() != null) {
-            specification = specification.and(ProductSpecification.priceLesserThanOrEq(productFilter.getMaxPrice()));
-        }
+    public List<ProductDto> findAllWithFilters(@RequestBody ProductFilter productFilter,
+                                               @RequestParam(defaultValue = "1", name = "page") Integer page) {
 
-        return productService.findAllWithFilters(specification).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        if (page < 1) {
+            page = 1;
+        }
+        Specification<Product> spec = productService.createSpecByFilters(productFilter);
+        return productService.findAllWithFilters(spec, page - 1).stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 
 

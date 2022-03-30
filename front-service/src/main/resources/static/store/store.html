@@ -1,0 +1,46 @@
+<div>
+    <p></p>
+    <h3>Каталог товаров</h3>
+    <p></p>
+
+        <h1>Фильтры</h1>
+
+        <li class="filters">
+            <form class="align-middle" ng-submit="filter()">
+                <div class="input-group input-group-sm" style="padding: 4px;">
+                    <input id="filterTitle" class="form-control" ng-model="user.word" type="text"
+                           placeholder="Название" aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+                    <input id="filterMinPrice" class="form-control" ng-model="user.minPrice" type="number"
+                           placeholder="Минимальная цена" aria-describedby="inputGroup-sizing-sm"
+                           style="margin-left: 10px;">
+                    <input id="filterMaxPrice" class="form-control" ng-model="user.maxPrice" type="number"
+                           placeholder="Максимальная цена" aria-describedby="inputGroup-sizing-sm"
+                           style="margin-left: 10px;">
+                    <button type="submit" class="btn btn-primary">Фильтровать</button>
+                </div>
+            </form>
+        </li>
+        <br>
+
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <td>Id</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in productsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="showProductInfo(p.id)">Info</button>
+                <button type="button" class="btn btn-primary" ng-click="addProductToCart(p.id)">Добавить в корзину
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

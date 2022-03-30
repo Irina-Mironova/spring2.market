@@ -5,9 +5,6 @@ import ru.geekbrains.market.core.entities.Product;
 
 public class ProductSpecification {
     public static Specification<Product> titleContains(String word) {
-        if (word == null) {
-            return null;
-        }
         return (root, criteriaQuery, criteriaBuilder) -> {
             return criteriaBuilder.like(root.get("title"), "%" + word + "%");
         };

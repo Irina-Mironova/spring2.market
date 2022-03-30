@@ -31,8 +31,6 @@ public class ShoppingCartServiceTest {
         Mockito.doReturn(productDto).when(productServiceIntegration).getProductById(1212L);
         shoppingCartService.add(1212L);
 
-        // В таком виде тест почему-то проваливается:
-        //Assertions.assertEquals(shoppingCartService.getCurrentCart().getTotalPrice(),BigDecimal.valueOf(100));
         Assertions.assertEquals(shoppingCartService.getCurrentCart().getTotalPrice().intValue(),100);
 
     }
