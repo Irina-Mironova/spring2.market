@@ -14,22 +14,24 @@ public class ShoppingCartController {
     private final ShoppingCartConverter shoppingCartConverter;
 
     @GetMapping
-    public ShoppingCartDto getCurrentCart() {
-        return shoppingCartConverter.entityToDto(shoppingCartService.getCurrentCart());
+    public ShoppingCartDto getCurrentCart(@RequestHeader(defaultValue = "noName") String username) {
+        return shoppingCartConverter.entityToDto(shoppingCartService.getCurrentCart(username));
     }
 
     @GetMapping("/add/{id}")
-    public void addToCart(@PathVariable Long id) {
-        shoppingCartService.add(id);
+    public void addToCart(@RequestHeader(defaultValue = "noName") String username, @PathVariable Long id) {
+        shoppingCartService.add(id, username);
     }
 
     @GetMapping("/remove")
-    public void removeProduct(@RequestParam Long productId, @RequestParam(defaultValue = "0") int quantity) {
-        shoppingCartService.removeProduct(productId, quantity);
+    public void removeProduct(@RequestHeader(defaultValue = "noName") String username,
+                              @RequestParam Long productId,
+                              @RequestParam(defaultValue = "0") int quantity) {
+        shoppingCartService.removeProduct(productId, quantity, username);
     }
 
     @GetMapping("/clear")
-    public void clearCurrentCart() {
-        shoppingCartService.removeAll();
+    public void clearCurrentCart(@RequestHeader(defaultValue = "noName") String username) {
+        shoppingCartService.removeAll(username);
     }
 }

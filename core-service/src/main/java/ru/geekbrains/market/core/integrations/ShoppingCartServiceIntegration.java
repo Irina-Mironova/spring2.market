@@ -10,17 +10,19 @@ import ru.geekbrains.market.api.ShoppingCartDto;
 public class ShoppingCartServiceIntegration {
     private final WebClient cartServiceWebClient;
 
-    public ShoppingCartDto getCurrentCart() {
+    public ShoppingCartDto getCurrentCart(String username) {
         return cartServiceWebClient.get()
                 .uri("/api/v1/cart")
+                .header("username", username)
                 .retrieve()
                 .bodyToMono(ShoppingCartDto.class)
                 .block();
     }
 
-    public void clear() {
+    public void clear(String username) {
         cartServiceWebClient.get()
                 .uri("/api/v1/cart/clear")
+                .header("username", username)
                 .retrieve()
                 .toBodilessEntity()
                 .block();

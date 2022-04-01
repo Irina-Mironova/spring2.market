@@ -23,7 +23,7 @@ public class OrderService {
     public Order createOrder(String username, String address, String phone) {
         Order order = new Order();
 
-        ShoppingCartDto shoppingCartDto = shoppingCartServiceIntegration.getCurrentCart();
+        ShoppingCartDto shoppingCartDto = shoppingCartServiceIntegration.getCurrentCart(username);
         order.setUsername(username);
         order.setAddress(address);
         order.setPhone(phone);
@@ -37,7 +37,7 @@ public class OrderService {
                         item.getPrice()))
                 .collect(Collectors.toList()));
         orderRepository.save(order);
-        shoppingCartServiceIntegration.clear();
+        shoppingCartServiceIntegration.clear(username);
         return order;
     }
 }

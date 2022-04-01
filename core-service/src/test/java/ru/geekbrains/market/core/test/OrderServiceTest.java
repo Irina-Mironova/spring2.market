@@ -37,7 +37,7 @@ public class OrderServiceTest {
 
 
     @Test
-    public void createOrderTest(){
+    public void createOrderTest() {
         ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
         List<ShoppingCartItemDto> items = new ArrayList<>();
         ShoppingCartItemDto shoppingCartItemDto = new ShoppingCartItemDto();
@@ -54,12 +54,12 @@ public class OrderServiceTest {
         product.setTitle("Bread");
         product.setPrice(BigDecimal.valueOf(100));
 
-        Mockito.doReturn(shoppingCartDto).when(shoppingCartServiceIntegration).getCurrentCart();
+        Mockito.doReturn(shoppingCartDto).when(shoppingCartServiceIntegration).getCurrentCart("Bob");
         Mockito.doReturn(Optional.of(product)).when(productService).findById(1212L);
 
 
-        Order order = orderService.createOrder("bob","Москва","89174241435");
-        Assertions.assertEquals(order.getTotalPrice(),BigDecimal.valueOf(200));
-        Mockito.verify(orderRepository,Mockito.times(1)).save(ArgumentMatchers.any());
+        Order order = orderService.createOrder("Bob", "Москва", "89174241435");
+        Assertions.assertEquals(order.getTotalPrice(), BigDecimal.valueOf(200));
+        Mockito.verify(orderRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }
 }

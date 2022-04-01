@@ -39,14 +39,16 @@ public class ProductService {
 
     public Specification<Product> createSpecByFilters(ProductFilter productFilter) {
         Specification<Product> specification = Specification.where(null);
-        if (productFilter.getWord() != null) {
-            specification = specification.and(ProductSpecification.titleContains(productFilter.getWord()));
-        }
-        if (productFilter.getMinPrice() != null) {
-            specification = specification.and(ProductSpecification.priceGreaterThanOrEq(productFilter.getMinPrice()));
-        }
-        if (productFilter.getMaxPrice() != null) {
-            specification = specification.and(ProductSpecification.priceLesserThanOrEq(productFilter.getMaxPrice()));
+        if (productFilter != null) {
+            if (productFilter.getWord() != null) {
+                specification = specification.and(ProductSpecification.titleContains(productFilter.getWord()));
+            }
+            if (productFilter.getMinPrice() != null) {
+                specification = specification.and(ProductSpecification.priceGreaterThanOrEq(productFilter.getMinPrice()));
+            }
+            if (productFilter.getMaxPrice() != null) {
+                specification = specification.and(ProductSpecification.priceLesserThanOrEq(productFilter.getMaxPrice()));
+            }
         }
         return specification;
     }

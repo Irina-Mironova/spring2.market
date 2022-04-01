@@ -8,33 +8,46 @@ import ru.geekbrains.market.carts.integrations.ProductServiceIntegration;
 
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ShoppingCartService {
     private final ProductServiceIntegration productServiceIntegration;
-    private ShoppingCart tempCart;
+    private HashMap<String, ShoppingCart> cartsList;
 
     @PostConstruct
     public void init() {
-        tempCart = new ShoppingCart();
+        cartsList = new HashMap<>();
     }
 
-    public ShoppingCart getCurrentCart() {
-        return tempCart;
+    public ShoppingCart getCurrentCart(String userName) {
+        if (!cartsList.containsKey(userName)) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            cartsList.put(userName, shoppingCart);
+            return shoppingCart;
+        } else {
+            ShoppingCart shoppingCart = cartsList.get(userName);
+            return shoppingCart;
+        }
     }
 
-    public void add(Long productId) {
+    public void add(Long productId, String userName) {
+        ShoppingCart shoppingCart = getCurrentCart(userName);
         ProductDto product = productServiceIntegration.getProductById(productId);
-        tempCart.add(product);
+        shoppingCart.add(product);
     }
 
-    public void removeProduct(Long productId, int quantity) {
-        tempCart.removeProduct(productId, quantity);
+    public void removeProduct(Long productId, int quantity, String userName) {
+        ShoppingCart shoppingCart = getCurrentCart(userName);
+        shoppingCart.removeProduct(productId, quantity);
     }
 
-    public void removeAll() {
-        tempCart.removeAll();
+    public void removeAll(String userName) {
+        ShoppingCart shoppingCart = getCurrentCart(userName);
+        shoppingCart.removeAll();
     }
 
 }

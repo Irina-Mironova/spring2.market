@@ -1,4 +1,4 @@
-angular.module('market').controller('cartController', function ($scope, $http, $location, $localStorage) {
+angular.module('market').controller('cartController', function ($rootScope,$scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:5555/cart/';
     const coreContextPath = 'http://localhost:5555/core/';
 
@@ -33,6 +33,14 @@ angular.module('market').controller('cartController', function ($scope, $http, $
          $scope.loadCart();
       });
     }
+
+    $rootScope.isUserLoggedIn = function () {
+            if ($localStorage.productMarketUser) {
+                return true;
+            } else {
+                return false;
+            }
+        };
 
     $scope.loadCart();
 

@@ -22,16 +22,16 @@ public class ShoppingCartServiceTest {
     private ProductServiceIntegration productServiceIntegration;
 
     @Test
-    public void addTest(){
+    public void addTest() {
         ProductDto productDto = new ProductDto();
         productDto.setId(1212L);
         productDto.setTitle("Bread");
         productDto.setPrice(BigDecimal.valueOf(100));
 
         Mockito.doReturn(productDto).when(productServiceIntegration).getProductById(1212L);
-        shoppingCartService.add(1212L);
+        shoppingCartService.add(1212L, "Bob");
 
-        Assertions.assertEquals(shoppingCartService.getCurrentCart().getTotalPrice().intValue(),100);
+        Assertions.assertEquals(shoppingCartService.getCurrentCart("Bob").getTotalPrice().intValue(), 100);
 
     }
 }

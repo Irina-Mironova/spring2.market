@@ -1,6 +1,7 @@
 package ru.geekbrains.market.core.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.market.api.ProductDto;
@@ -27,14 +28,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public List<ProductDto> findAllWithFilters(@RequestBody ProductFilter productFilter,
-                                               @RequestParam(defaultValue = "1", name = "page") Integer page) {
+    public Page<ProductDto> findAllWithFilters(@RequestBody(required = false) ProductFilter productFilter,
+                                               @RequestParam(required = false, defaultValue = "1", name = "page") Integer page) {
 
         if (page < 1) {
             page = 1;
         }
         Specification<Product> spec = productService.createSpecByFilters(productFilter);
-        return productService.findAllWithFilters(spec, page - 1).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        return productService.findAllWithFilters(spec, page - 1).map(productConverter::entityToDto);
     }
 
 

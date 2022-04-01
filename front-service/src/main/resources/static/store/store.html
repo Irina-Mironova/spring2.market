@@ -43,4 +43,18 @@
         </tbody>
     </table>
 
+
+        <nav aria-label="Page navigation example" >
+        <ul class="pagination">
+            <li class="page-item" ng-show="isPreviousPage()" >
+                <button class="page-link"  ng-click="loadProducts(currentPage-1)">Предыдущая стр</button>
+            </li>
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+            <li class="page-item" ng-show="isNextPage()">
+                <button class="page-link" ng-click="loadProducts(currentPage + 1)">Следующая стр</button>
+        </ul>
+        </nav>
+
 </div>

@@ -31,32 +31,32 @@ public class ShoppingCartControllerTest {
     @MockBean
     private ShoppingCartService shoppingCartService;
 
-   @Test
-   public void getCurrentCurtTest() throws Exception {
+    @Test
+    public void getCurrentCurtTest() throws Exception {
 
-       ShoppingCart shoppingCart = new ShoppingCart();
+        ShoppingCart shoppingCart = new ShoppingCart();
 
-       ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-       shoppingCartItem.setProductTitle("Bread");
-       shoppingCartItem.setPricePerProduct(BigDecimal.valueOf(100));
-       shoppingCartItem.setQuantity(2);
-       shoppingCartItem.setPrice(BigDecimal.valueOf(200));
-       shoppingCartItem.setProductId(1212L);
+        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+        shoppingCartItem.setProductTitle("Bread");
+        shoppingCartItem.setPricePerProduct(BigDecimal.valueOf(100));
+        shoppingCartItem.setQuantity(2);
+        shoppingCartItem.setPrice(BigDecimal.valueOf(200));
+        shoppingCartItem.setProductId(1212L);
 
-       shoppingCart.setTotalPrice(BigDecimal.valueOf(200));
-       shoppingCart.setItems(List.of(shoppingCartItem));
+        shoppingCart.setTotalPrice(BigDecimal.valueOf(200));
+        shoppingCart.setItems(List.of(shoppingCartItem));
 
-       given(shoppingCartService.getCurrentCart()).willReturn(shoppingCart);
+        given(shoppingCartService.getCurrentCart("Bob")).willReturn(shoppingCart);
 
-       mockMvc
-               .perform(
+        mockMvc
+                .perform(
                         get("/api/v1/cart")
-                       .contentType(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
 
-               )
-               .andDo(print())
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.totalPrice", is(shoppingCart.getTotalPrice().intValue())));
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalPrice", is(shoppingCart.getTotalPrice().intValue())));
 
-   }
+    }
 }
