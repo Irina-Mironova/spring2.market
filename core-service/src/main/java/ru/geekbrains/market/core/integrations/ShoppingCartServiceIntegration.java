@@ -12,7 +12,7 @@ public class ShoppingCartServiceIntegration {
 
     public ShoppingCartDto getCurrentCart(String username) {
         return cartServiceWebClient.get()
-                .uri("/api/v1/cart")
+                .uri("/api/v1/cart/0")
                 .header("username", username)
                 .retrieve()
                 .bodyToMono(ShoppingCartDto.class)
@@ -21,7 +21,7 @@ public class ShoppingCartServiceIntegration {
 
     public void clear(String username) {
         cartServiceWebClient.get()
-                .uri("/api/v1/cart/clear")
+                .uri("/api/v1/cart/0/clear")
                 .header("username", username)
                 .retrieve()
                 .toBodilessEntity()

@@ -3,26 +3,26 @@ angular.module('market').controller('cartController', function ($rootScope,$scop
     const coreContextPath = 'http://localhost:5555/core/';
 
     $scope.loadCart = function () {
-        $http.get(contextPath + 'api/v1/cart').then(function (response) {
+        $http.get(contextPath + 'api/v1/cart/' + $localStorage.productMarketGuestCartId).then(function (response) {
             $scope.cart = response.data;
         });
     }
 
 
     $scope.deleteCart = function () {
-        $http.get(contextPath + 'api/v1/cart/clear').then(function (response) {
+        $http.get(contextPath + 'api/v1/cart/'+ $localStorage.productMarketGuestCartId +'/clear').then(function (response) {
             $scope.loadCart();
         });
     }
 
     $scope.removeProductFromCart = function (productId, quantity){
-       $http.get(contextPath + 'api/v1/cart/remove?productId='+ productId+"&quantity="+quantity).then(function (response) {
+       $http.get(contextPath + 'api/v1/cart/'+ $localStorage.productMarketGuestCartId +'/remove?productId='+ productId+"&quantity="+quantity).then(function (response) {
          $scope.loadCart();
        });
     }
 
      $scope.addProductToCart = function (productId){
-       $http.get(contextPath + 'api/v1/cart/add/' + productId).then(function (response) {
+       $http.get(contextPath + 'api/v1/cart/'+ $localStorage.productMarketGuestCartId +'/add/' + productId).then(function (response) {
           $scope.loadCart();
        });
      }

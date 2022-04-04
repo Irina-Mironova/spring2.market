@@ -1,0 +1,40 @@
+<div>
+    <p></p>
+    <h3>Мои заказы</h3>
+    <button type="button" class="btn btn-primary" ng-click="deleteCart()">Очистить корзину</button>
+
+
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <td>Номер заказа</td>
+            <td>Адрес доставки</td>
+            <td>Телефон</td>
+            <td>Цена</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="order in orders">
+            <td>{{order.id}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.phone}}</td>
+            <td>{{order.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+<!--    <li class="order-item" ng-show="isUserLoggedIn()">-->
+<!--        <form class="align-middle" ng-submit="createOrder()">-->
+<!--            <div class="input-group input-group-sm" style="padding: 4px;">-->
+<!--                <input id="orderAddressField" class="form-control" ng-model="user.address" type="text"-->
+<!--                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">-->
+
+<!--                <input id="orderPhoneField" class="form-control" ng-model="user.phone" type="text"-->
+<!--                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">-->
+
+<!--                <button id="orderSubmit" class="btn btn-outline-warning btn-sm"-->
+<!--                        style="margin-left: 10px;" type="submit">Оформить заказ-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </li>-->
+
+</div>

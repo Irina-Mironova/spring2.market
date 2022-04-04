@@ -10,6 +10,7 @@ import ru.geekbrains.market.core.integrations.ShoppingCartServiceIntegration;
 import ru.geekbrains.market.core.repositories.OrderRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,5 +40,9 @@ public class OrderService {
         orderRepository.save(order);
         shoppingCartServiceIntegration.clear(username);
         return order;
+    }
+
+    public List<Order> findByUsername(String username) {
+        return orderRepository.findByUsername(username);
     }
 }

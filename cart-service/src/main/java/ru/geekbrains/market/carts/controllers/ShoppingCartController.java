@@ -3,8 +3,11 @@ package ru.geekbrains.market.carts.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.market.api.ShoppingCartDto;
+import ru.geekbrains.market.api.StringResponse;
 import ru.geekbrains.market.carts.converters.ShoppingCartConverter;
 import ru.geekbrains.market.carts.services.ShoppingCartService;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -13,25 +16,46 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final ShoppingCartConverter shoppingCartConverter;
 
-    @GetMapping
-    public ShoppingCartDto getCurrentCart(@RequestHeader(defaultValue = "noName") String username) {
-        return shoppingCartConverter.entityToDto(shoppingCartService.getCurrentCart(username));
+    @GetMapping("/generate_uuid")
+    public StringResponse generateUuid() {
+        return new StringResponse(UUID.randomUUID().toString());
     }
 
-    @GetMapping("/add/{id}")
-    public void addToCart(@RequestHeader(defaultValue = "noName") String username, @PathVariable Long id) {
-        shoppingCartService.add(id, username);
+    @GetMapping("/{uuid}")
+    public ShoppingCartDto getCurrentCart(@RequestHeader(name = "username", required = false) String username,
+                                          @PathVariable String uuid) {
+        String targetUuid = getShoppingCartUuid(username, uuid);
+        return shoppingCartConverter.entityToDto(shoppingCartService.getCurrentCart(targetUuid));
     }
 
-    @GetMapping("/remove")
-    public void removeProduct(@RequestHeader(defaultValue = "noName") String username,
+    @GetMapping("/{uuid}/add/{id}")
+    public void addToCart(@RequestHeader(name = "username", required = false) String username,
+                          @PathVariable String uuid,
+                          @PathVariable Long id) {
+        String targetUuid = getShoppingCartUuid(username, uuid);
+        shoppingCartService.add(id, targetUuid);
+    }
+
+    @GetMapping("/{uuid}/remove")
+    public void removeProduct(@RequestHeader(name = "username", required = false) String username,
+                              @PathVariable String uuid,
                               @RequestParam Long productId,
                               @RequestParam(defaultValue = "0") int quantity) {
-        shoppingCartService.removeProduct(productId, quantity, username);
+        String targetUuid = getShoppingCartUuid(username, uuid);
+        shoppingCartService.removeProduct(productId, quantity, targetUuid);
     }
 
-    @GetMapping("/clear")
-    public void clearCurrentCart(@RequestHeader(defaultValue = "noName") String username) {
-        shoppingCartService.removeAll(username);
+    @GetMapping("/{uuid}/clear")
+    public void clearCurrentCart(@RequestHeader(name = "username", required = false) String username,
+                                 @PathVariable String uuid) {
+        String targetUuid = getShoppingCartUuid(username, uuid);
+        shoppingCartService.removeAll(targetUuid);
+    }
+
+    private String getShoppingCartUuid(String username, String uuid) {
+        if (username != null) {
+            return username;
+        }
+        return uuid;
     }
 }

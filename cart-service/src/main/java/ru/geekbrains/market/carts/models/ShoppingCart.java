@@ -19,10 +19,6 @@ public class ShoppingCart {
         this.items = new ArrayList<>();
     }
 
-    public List<ShoppingCartItem> getItems() {
-        return Collections.unmodifiableList(items);
-    }
-
     public void add(ProductDto product) {
         for (ShoppingCartItem item : items) {
             if (product.getId().equals(item.getProductId())) {
