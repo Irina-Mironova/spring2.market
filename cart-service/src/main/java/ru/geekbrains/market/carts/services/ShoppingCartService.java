@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.market.api.ProductDto;
 import ru.geekbrains.market.carts.models.ShoppingCart;
 import ru.geekbrains.market.carts.integrations.ProductServiceIntegration;
+import ru.geekbrains.market.carts.models.ShoppingCartItem;
 
 
 import java.util.function.Consumer;
@@ -28,9 +29,22 @@ public class ShoppingCartService {
         return (ShoppingCart) redisTemplate.opsForValue().get(targetUuid);
     }
 
-    public void add(Long productId, String uuid) {
+    public ShoppingCart mergerCarts(String username, String uuidSource) {
+        ShoppingCart shoppingCartSource = getCurrentCart(uuidSource);
+        ShoppingCart shoppingCartTarget = getCurrentCart(username);
+
+        shoppingCartTarget.setTotalPrice(shoppingCartSource.getTotalPrice());
+        for (ShoppingCartItem item : shoppingCartSource.getItems()) {
+            add(item.getProductId(), item.getQuantity(), username);
+        }
+
+        removeAll(uuidSource);
+        return shoppingCartTarget;
+    }
+
+    public void add(Long productId, int quantity, String uuid) {
         ProductDto product = productServiceIntegration.getProductById(productId);
-        execute(uuid, shoppingCart -> shoppingCart.add(product));
+        execute(uuid, shoppingCart -> shoppingCart.add(product, quantity));
     }
 
     public void removeProduct(Long productId, int quantity, String uuid) {

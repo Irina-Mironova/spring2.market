@@ -33,7 +33,7 @@ public class ShoppingCartController {
                           @PathVariable String uuid,
                           @PathVariable Long id) {
         String targetUuid = getShoppingCartUuid(username, uuid);
-        shoppingCartService.add(id, targetUuid);
+        shoppingCartService.add(id, 1, targetUuid);
     }
 
     @GetMapping("/{uuid}/remove")
@@ -50,6 +50,11 @@ public class ShoppingCartController {
                                  @PathVariable String uuid) {
         String targetUuid = getShoppingCartUuid(username, uuid);
         shoppingCartService.removeAll(targetUuid);
+    }
+
+    @GetMapping("/merge/{uuid_source}")
+    public void mergerCarts(@RequestHeader(name = "username") String username, @PathVariable String uuid_source) {
+        shoppingCartService.mergerCarts(username, uuid_source);
     }
 
     private String getShoppingCartUuid(String username, String uuid) {

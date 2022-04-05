@@ -29,7 +29,7 @@ public class ShoppingCartServiceTest {
         productDto.setPrice(BigDecimal.valueOf(100));
 
         Mockito.doReturn(productDto).when(productServiceIntegration).getProductById(1212L);
-        shoppingCartService.add(1212L, "Bob");
+        shoppingCartService.add(1212L, 1, "Bob");
 
         Assertions.assertEquals(shoppingCartService.getCurrentCart("Bob").getTotalPrice().intValue(), 100);
 

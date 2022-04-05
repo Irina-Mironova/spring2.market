@@ -60,6 +60,7 @@
 
 angular.module('market').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
     $scope.tryToAuth = function () {
+        $scope.user.uuid = $localStorage.productMarketGuestCartId;
         $http.post('http://localhost:5555/auth/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {

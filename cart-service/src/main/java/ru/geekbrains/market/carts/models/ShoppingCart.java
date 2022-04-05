@@ -6,7 +6,6 @@ import ru.geekbrains.market.api.ProductDto;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -19,15 +18,16 @@ public class ShoppingCart {
         this.items = new ArrayList<>();
     }
 
-    public void add(ProductDto product) {
+    public void add(ProductDto product, int quantity) {
         for (ShoppingCartItem item : items) {
             if (product.getId().equals(item.getProductId())) {
-                item.changeQuantity(1);
+                item.changeQuantity(quantity);
                 recalculate();
                 return;
             }
         }
-        items.add(new ShoppingCartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
+        items.add(new ShoppingCartItem(product.getId(), product.getTitle(), quantity, product.getPrice(),
+                BigDecimal.valueOf(product.getPrice().doubleValue() * quantity).setScale(2, RoundingMode.HALF_UP)));
         recalculate();
     }
 

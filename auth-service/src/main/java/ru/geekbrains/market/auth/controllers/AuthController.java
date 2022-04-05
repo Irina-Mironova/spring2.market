@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.market.api.*;
 import ru.geekbrains.market.auth.entities.User;
+import ru.geekbrains.market.auth.integrations.ShoppingCartServiceIntegration;
 import ru.geekbrains.market.auth.services.UserService;
 import ru.geekbrains.market.auth.utils.JwtTokenUtil;
 
@@ -26,6 +27,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final ShoppingCartServiceIntegration shoppingCartServiceIntegration;
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
@@ -36,6 +38,9 @@ public class AuthController {
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
+
+        shoppingCartServiceIntegration.mergerCarts(authRequest.getUsername(), authRequest.getUuid());
+
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
@@ -58,6 +63,8 @@ public class AuthController {
 
         UserDetails userDetails = userService.loadUserByUsername(registrationUserDto.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
+
+        shoppingCartServiceIntegration.mergerCarts(registrationUserDto.getUsername(), registrationUserDto.getUuid());
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
