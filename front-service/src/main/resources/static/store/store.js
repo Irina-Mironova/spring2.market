@@ -4,7 +4,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
     $scope.currentPage = 1;
     totalPages = 1;
 
-        $scope.loadProducts = function (pageIndex) {
+    $scope.loadProducts = function (pageIndex) {
             if (pageIndex != $scope.currentPage) {
                $scope.currentPage = pageIndex;
             }
@@ -13,7 +13,8 @@ angular.module('market').controller('storeController', function ($scope, $http, 
                totalPages = response.data.totalPages;
                $scope.paginationArray = $scope.generatePagesIndexes(1, totalPages);
             });
-        }
+    }
+
 
         $scope.generatePagesIndexes = function (startPage, endPage) {
             let arr = [];
@@ -22,6 +23,7 @@ angular.module('market').controller('storeController', function ($scope, $http, 
             }
             return arr;
         }
+
 
         $scope.isPreviousPage = function () {
             return ($scope.currentPage == 1) ? false : true;

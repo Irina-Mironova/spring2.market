@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.market.api.ProductDto;
 import ru.geekbrains.market.api.ProductFilter;
 import ru.geekbrains.market.core.entities.Product;
 import ru.geekbrains.market.core.repositories.ProductRepository;
@@ -31,6 +32,14 @@ public class ProductService {
 
     public Page<Product> findAllWithFilters(Specification<Product> productSpecification, int page) {
         return productRepository.findAll(productSpecification, PageRequest.of(page, SIZE_PAGE));
+    }
+
+    public Product createNewProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setPrice(productDto.getPrice());
+        product.setTitle(productDto.getTitle());
+        productRepository.save(product);
+        return product;
     }
 
     public void deleteById(Long id) {

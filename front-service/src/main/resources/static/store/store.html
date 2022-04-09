@@ -3,24 +3,24 @@
     <h3>Каталог товаров</h3>
     <p></p>
 
-        <h1>Фильтры</h1>
+    <h1>Фильтры</h1>
 
-        <li class="filters">
-            <form class="align-middle" ng-submit="filter()">
-                <div class="input-group input-group-sm" style="padding: 4px;">
-                    <input id="filterTitle" class="form-control" ng-model="user.word" type="text"
-                           placeholder="Название" aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
-                    <input id="filterMinPrice" class="form-control" ng-model="user.minPrice" type="number"
-                           placeholder="Минимальная цена" aria-describedby="inputGroup-sizing-sm"
-                           style="margin-left: 10px;">
-                    <input id="filterMaxPrice" class="form-control" ng-model="user.maxPrice" type="number"
-                           placeholder="Максимальная цена" aria-describedby="inputGroup-sizing-sm"
-                           style="margin-left: 10px;">
-                    <button type="submit" class="btn btn-primary">Фильтровать</button>
-                </div>
-            </form>
-        </li>
-        <br>
+    <li class="filters">
+        <form class="align-middle" ng-submit="filter()">
+            <div class="input-group input-group-sm" style="padding: 4px;">
+                <input id="filterTitle" class="form-control" ng-model="user.word" type="text"
+                       placeholder="Название" aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+                <input id="filterMinPrice" class="form-control" ng-model="user.minPrice" type="number"
+                       placeholder="Минимальная цена" aria-describedby="inputGroup-sizing-sm"
+                       style="margin-left: 10px;">
+                <input id="filterMaxPrice" class="form-control" ng-model="user.maxPrice" type="number"
+                       placeholder="Максимальная цена" aria-describedby="inputGroup-sizing-sm"
+                       style="margin-left: 10px;">
+                <button type="submit" class="btn btn-primary">Фильтровать</button>
+            </div>
+        </form>
+    </li>
+    <br>
 
     <table class="table table-striped">
         <tr class="table-primary">
@@ -44,17 +44,18 @@
     </table>
 
 
-        <nav aria-label="Page navigation example" >
+    <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item" ng-show="isPreviousPage()" >
-                <button class="page-link"  ng-click="loadProducts(currentPage-1)">Предыдущая стр</button>
+            <li class="page-item" ng-show="isPreviousPage()">
+                <button class="page-link" ng-click="loadProducts(currentPage-1)">Предыдущая стр</button>
             </li>
             <li class="page-item" ng-repeat="pageIndex in paginationArray">
                 <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
             </li>
             <li class="page-item" ng-show="isNextPage()">
                 <button class="page-link" ng-click="loadProducts(currentPage + 1)">Следующая стр</button>
+            </li>
         </ul>
-        </nav>
+    </nav>
 
 </div>
