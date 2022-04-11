@@ -20,7 +20,7 @@ import ru.geekbrains.market.core.services.ProductService;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
-@Tag(name="Продукты", description = "Методы работы с продуктами")
+@Tag(name = "Продукты", description = "Методы работы с продуктами")
 public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
@@ -31,7 +31,7 @@ public class ProductController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = PageDto.class))
+                            content = @Content(schema = @Schema(implementation = Page.class))
                     )
             }
     )
@@ -44,8 +44,9 @@ public class ProductController {
         }
         Specification<Product> spec = productService.createSpecByFilters(productFilter);
 
-        return productService.findAllWithFilters(spec, page - 1).map(productConverter::entityToDto);//.map(springPage ->{
+        return productService.findAllWithFilters(spec, page - 1).map(productConverter::entityToDto);
     }
+
 
     @Operation(
             summary = "Запрос на создание нового продукта",
@@ -83,8 +84,18 @@ public class ProductController {
         return productConverter.entityToDto(product);
     }
 
+
+    @Operation(
+            summary = "Запрос на удаление продукта по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Продукт успешно удален", responseCode = "200"
+                    )
+            }
+    )
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable @Parameter(description = "Идентификатор продукта", required = true) Long id) {
         productService.deleteById(id);
     }
 }
