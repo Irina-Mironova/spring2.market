@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Data
@@ -29,6 +30,15 @@ public class ShoppingCart {
         items.add(new ShoppingCartItem(product.getId(), product.getTitle(), quantity, product.getPrice(),
                 BigDecimal.valueOf(product.getPrice().doubleValue() * quantity).setScale(2, RoundingMode.HALF_UP)));
         recalculate();
+    }
+
+    public Optional<ProductDto> findProduct(Long id) {
+        for (ShoppingCartItem item : items) {
+            if (item.getProductId().equals(id)) {
+                return Optional.of(new ProductDto(item.getProductId(), item.getProductTitle(), item.getPrice()));
+            }
+        }
+        return Optional.empty();
     }
 
     private void recalculate() {

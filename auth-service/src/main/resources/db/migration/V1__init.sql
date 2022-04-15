@@ -37,3 +37,4 @@ values ('bob', '$2a$12$uY2t0/L2eQ4cCiyCuQ36FOT7S3e/jzTte.aIVXYkD6HqPG6wTl826', '
 insert into users_roles (user_id, role_id)
 values  (1, 2),
         (2, 1);
+

@@ -72,6 +72,9 @@ angular.module('market').controller('indexController', function ($rootScope, $sc
 
                     $location.path('/');
                 }
+                $http.get('http://localhost:5555/core/admin').then(function (response) {
+                       alert(response.data.value);
+                });
             }, function errorCallback(response) {
             });
     };

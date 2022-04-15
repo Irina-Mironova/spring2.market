@@ -10,6 +10,7 @@ import ru.geekbrains.market.carts.integrations.ProductServiceIntegration;
 import ru.geekbrains.market.carts.models.ShoppingCartItem;
 
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
@@ -43,8 +44,14 @@ public class ShoppingCartService {
     }
 
     public void add(Long productId, int quantity, String uuid) {
-        ProductDto product = productServiceIntegration.getProductById(productId);
-        execute(uuid, shoppingCart -> shoppingCart.add(product, quantity));
+        ShoppingCart shoppingCart = getCurrentCart(uuid);
+        Optional<ProductDto> productDto = shoppingCart.findProduct(productId);
+
+        if (!productDto.isPresent()) {
+            execute(uuid, shoppingCart1 -> shoppingCart1.add(productServiceIntegration.getProductById(productId), quantity));
+        } else {
+            execute(uuid, shoppingCart1 -> shoppingCart1.add((ProductDto) productDto.get(), quantity));
+        }
     }
 
     public void removeProduct(Long productId, int quantity, String uuid) {
